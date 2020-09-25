@@ -40,8 +40,6 @@ public class SmallestElementLargerThanTarget {
         }else if(array[r] > target){
             res = array[r];
         }
-
-        
     }
 
 }
