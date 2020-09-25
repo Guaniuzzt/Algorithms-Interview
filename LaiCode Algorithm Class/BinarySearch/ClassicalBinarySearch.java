@@ -18,7 +18,6 @@ public class ClassicalBinarySearch {
         int res = -1;
         while(i <= j){
             int mid = i + (j - i)/2;
-
             if(array[mid] < target){
                 i = mid + 1;
             }else if(array[mid] >target){
