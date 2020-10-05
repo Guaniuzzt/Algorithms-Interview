@@ -1,4 +1,4 @@
-
+import java.util.Arrays;
 
 public class BinarySearchInMatrix {
 
@@ -24,6 +24,7 @@ public class BinarySearchInMatrix {
             return new int[]{-1, -1};
         }
         int[] res = new int[]{-1, -1};
+        Arrays.sort(res);
         int left = 0;
         int right = matrix.length * matrix[0].length - 1;
 
