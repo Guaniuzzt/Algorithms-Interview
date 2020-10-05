@@ -19,9 +19,6 @@ public class MergeTwoSortedLinkedList {
         ListNode res = method(l1, l2);
         Printer printer = new Printer();
         printer.print(res);
-
-
-
     }
 
 
