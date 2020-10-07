@@ -27,7 +27,7 @@ public class PostOrderTraversalIterative {
         }
         Collections.reverse(list);
 
-        
+
 
     }
 }
