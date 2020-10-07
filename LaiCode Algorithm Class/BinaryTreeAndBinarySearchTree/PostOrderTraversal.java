@@ -31,6 +31,6 @@ public class PostOrderTraversal {
         method(list, node.right);
         list.add(node.key);
 
-        
+
     }
 }
