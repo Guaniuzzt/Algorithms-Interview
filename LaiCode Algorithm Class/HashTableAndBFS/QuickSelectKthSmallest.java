@@ -9,66 +9,46 @@ public class QuickSelectKthSmallest {
         int k = 8;
         int[] arr = new int[]{0,0,1,2,4,2,2,3,1,4};
         System.out.println(Arrays.toString(arr));
-        int[] res = test.getLeastNumbers(arr, k);
+        int[] res = test.getLeastNumbers(arr,  k);
         System.out.println(Arrays.toString(res));
 
     }
 
 
     public int[] getLeastNumbers(int[] arr, int k) {
-
-        if(arr == null || arr.length == 0)
+        if (k == 0 || arr.length == 0) {
             return new int[0];
-        if(arr.length < k)
-            return arr;
-
-        int low = 0;
-        int high = arr.length - 1;
-        int position = helper(arr, low, high);
-
-        while(true){
-            if(position == k-1)
-                break;
-            else if(position < k-1)
-                position = helper(arr, position+1, high);
-
-            else{
-                position = helper(arr, low, position-1);
-            }
         }
-
-        int[] res = new int[k];
-        for(int i=0; i<k; i++){
-            res[i] = arr[i];
-        }
-
-        return res;
+        // 最后一个参数表示我们要找的是下标为k-1的数
+        return quickSearch(arr, 0, arr.length - 1, k - 1);
     }
 
-    public static int helper(int[] arr, int low, int high){
-        int flag = arr[low];
-        int i = low;
-        int j = high;
-
-        while(i < j){
-            if(arr[i] <= flag){
-                i++;
-            }else{
-                swap(arr, i, j);
-                j--;
-            }
+    private int[] quickSearch(int[] nums, int lo, int hi, int k) {
+        // 每快排切分1次，找到排序后下标为j的元素，如果j恰好等于k就返回j以及j左边所有的数；
+        int j = partition(nums, lo, hi);
+        if (j == k) {
+            return Arrays.copyOf(nums, j + 1);
         }
-        swap(arr, j, low);
+        // 否则根据下标j与k的大小关系来决定继续切分左段还是右段。
+        return j > k? quickSearch(nums, lo, j - 1, k): quickSearch(nums, j + 1, hi, k);
+    }
+
+    // 快排切分，返回下标j，使得比nums[j]小的数都在j的左边，比nums[j]大的数都在j的右边。
+    private int partition(int[] nums, int lo, int hi) {
+        int v = nums[lo];
+        int i = lo, j = hi + 1;
+        while (true) {
+            while (++i <= hi && nums[i] < v);
+            while (--j >= lo && nums[j] > v);
+            if (i >= j) {
+                break;
+            }
+            int t = nums[j];
+            nums[j] = nums[i];
+            nums[i] = t;
+        }
+        nums[lo] = nums[j];
+        nums[j] = v;
         return j;
     }
-
-    public static void swap(int[] arr, int i, int j){
-
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-
-
-
 }
