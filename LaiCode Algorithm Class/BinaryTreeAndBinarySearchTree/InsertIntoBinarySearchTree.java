@@ -2,8 +2,6 @@ import utils.TreeNode;
 
 public class InsertIntoBinarySearchTree {
 
-
-
     public TreeNode method(TreeNode root, int val){
 
         if(root == null)
