@@ -5,7 +5,7 @@ import java.util.List;
     m x n matrix
  */
 
-public class SpirmalOrderTraverseII {
+public class SpirmalOrderTraverse_II {
 
     public List<Integer> spiral(int[][] matrix) {
         // Write your solution here

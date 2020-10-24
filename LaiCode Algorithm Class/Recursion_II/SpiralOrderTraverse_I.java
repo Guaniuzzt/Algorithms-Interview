@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpiralOrderTraverseI {
+public class SpiralOrderTraverse_I {
 
     /*
     Traverse an N * N 2D array in spiral order clock-wise starting from the top left corner.
