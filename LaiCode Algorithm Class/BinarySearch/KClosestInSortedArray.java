@@ -6,43 +6,53 @@ public class KClosestInSortedArray {
 
 
     public static void main(String[] args) {
-        int[] test = new int[]{1,2,5,6,10};
-        int[] res= method(test, 5, 5);
+        int[] test = new int[]{1,3,5};
+        int[] res= method(test, 10, 3);
 
         System.out.println(Arrays.toString(res));
     }
 
     //return index
     public static int[] method(int[] array, int target, int k){
-        int[] res = new int[k];
+        // Write your solution here
+
+        int[] result = new int[k];
         if(array == null || array.length == 0){
-            return res;
+            return result;
         }
+
+        if(array.length < k){
+            k = array.length;
+        }
+
+        result = new int[k];
 
         int l = 0;
         int r = array.length - 1;
+        int mid;
 
         while(l < r - 1){
-            int mid = l + (r - l)/2;
+            mid = l + (r - l)/2;
             if(array[mid] == target){
-                l = mid;
-            }else if(array[mid] < target){
-                l = mid;
-            }else {
+                r = mid;
+            }else if(array[mid] > target){
                 r = mid;
             }
-        }
-
-        for(int m=0; m<k; m++){
-
-            if(l < 0 || (r < array.length && Math.abs(array[l] - target) > Math.abs(array[r] - target))){
-                res[m] = array[r++];
-            }else{
-                res[m] = array[l--];
+            else{
+                l = mid;
             }
         }
 
-        return res;
+        for(int i=0; i<k; i++){
+            if(l <0 ||
+                    (r <= array.length - 1) &&  (Math.abs(target - array[l]) > Math.abs(target - array[r])) ){   // 此处(r <= array.length - 1)一定要在前面进行判断，如果放在后面会越界
+                result[i] = array[r++];
+            }else{
+                result[i] = array[l--];
+            }
+        }
+
+        return result;
 
 
 

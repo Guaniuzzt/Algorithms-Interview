@@ -16,54 +16,67 @@ Space: O(n+ k)
 public class TopKFrequentWord {
 
     public static void main(String[] args) {
-        String[] test = new String[]{"d","a","c","b","d","a","b","b","a","d","d","a","d"};
-        System.out.println(Arrays.toString(method(test, 5)));
+       // String[] test = new String[]{"d","a","c","b","d","a","b","b","a","d","d","a","d"};
+        String[] test2 = new String[]{"a","a","b"};
+        System.out.println(Arrays.toString(method(test2, 1)));
+        //System.out.println(Arrays.toString(method(test, 5)));
     }
 
 
-    public static String[] method(String[] input, int k){
-        String[] res = new String[k];
-        if(input == null || input.length == 0){
-            return res;
+    public static String[] method(String[] combo, int k){
+        // Write your solution here
+        String[] result = new String[0];
+        if(combo.length == 0){
+            return result;
         }
+
 
 
         Map<String, Integer> map = new HashMap<>();
-        for(String str : input){
-            int times = map.getOrDefault(str, 0);
-            map.put(str, times + 1);
+        int count = 0;
+        for(String str : combo){
+            Integer temp = map.get(str);
+            if(temp == null){
+                count++;
+                map.put(str, 1);
+            }else{
+                map.put(str, temp+1);
+            }
         }
 
-        if( k > map.size()){
-            k = map.size();
+        if(k > count){
+            k = count;
         }
+        result = new String[k];
 
-        res = new String[k];
 
-        PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>(k, new Comparator<Map.Entry<String, Integer>>() {
+        PriorityQueue<Map.Entry<String, Integer>> minheap = new PriorityQueue<>(k, new Comparator<Map.Entry<String, Integer>>(){
+
             @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                if(o1.getValue() == o2.getValue()){
+            public int compare(Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2){
+                if(e1.getValue() == e2.getValue()){
                     return 0;
                 }
-                return o1.getValue() < o2.getValue() ? -1 : 1;
+                return e1.getValue() < e2.getValue() ? -1 : 1;
             }
         });
 
+
         for(Map.Entry<String, Integer> entry : map.entrySet()){
-            if(pq.size() < k)
-                pq.offer(entry);
-            else{
-                if(pq.peek().getValue() < entry.getValue()){
-                    pq.poll();
-                    pq.offer(entry);
+            if(minheap.size() < k){
+                minheap.offer(entry);
+            }else{
+                if(entry.getValue() > minheap.peek().getValue()){
+                    minheap.poll();
+                    minheap.offer(entry);
                 }
             }
+
         }
 
         for(int i=k-1; i>=0; i--){
-            res[i] = pq.poll().getKey();
+            result[i] = minheap.poll().getKey();
         }
-        return res;
+        return result;
     }
 }

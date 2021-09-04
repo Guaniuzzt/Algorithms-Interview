@@ -19,9 +19,9 @@ public class ClassicalBinarySearch {
         while(i <= j){
             int mid = i + (j - i)/2;
             if(array[mid] < target){
-                i = mid + 1;
+                i = mid + 1;   // 此处必须i = mid + 1; 因为如果（1+2）/2 = 1
             }else if(array[mid] >target){
-                j = mid - 1;
+                j = mid - 1;   // 此处必须j = mid - 1; 因为如果（1+2）/2 = 1
             }else {
                 res = mid;
                 break;

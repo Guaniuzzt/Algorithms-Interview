@@ -12,14 +12,14 @@ public class AllAnagrams {
      */
 
     public static void main(String[] args) {
-        String pattern = "ab";
-        String input = "abcbadefabghab";  // 0 3 8 18
+        String pattern = "aab";
+        String input = "ababacbbaac";  // 0 3 8 18
         System.out.println(method(pattern, input));
     }
 
-    public static List<Integer> method(String pattern, String input){
+    public static List<Integer> method(String sh, String lo){
 
-        List<Integer> res = new ArrayList<>();
+        /*List<Integer> res = new ArrayList<>();
         if(input == null || input.length() ==0)
             return res;
 
@@ -55,7 +55,49 @@ public class AllAnagrams {
 
         }
 
-        return res;
+        return res;*/
+
+        List<Integer> list = new ArrayList<>();
+
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i=0; i<sh.length(); i++){
+            char temp = sh.charAt(i);
+            map.put(temp, map.get(temp)  == null ? 1 : map.get(temp) + 1 );
+        }
+
+        int match = 0;
+        int size = map.size();
+
+        for(int i=0; i<lo.length(); i++){
+
+            char temp = lo.charAt(i);
+            Integer count = map.get(temp);
+            if(count != null){
+                map.put(temp, count-1);
+                if(count == 1){
+                    match++;
+                }
+            }
+
+            if(i >= sh.length()){
+                char pre = lo.charAt(i-sh.length());
+                Integer countpre = map.get(lo.charAt(i-sh.length()));
+                if(countpre != null){
+                    map.put(pre, countpre+1);
+                    if(countpre == 0){
+                        match--;
+                    }
+                }
+
+
+            }
+
+            if(match == size){
+                list.add(i - sh.length() + 1);
+            }
+        }
+
+        return list;
 
 
 

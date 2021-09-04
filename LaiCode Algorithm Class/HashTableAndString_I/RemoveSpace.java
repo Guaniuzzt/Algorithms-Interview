@@ -11,7 +11,7 @@ public class RemoveSpace {
 
     public static void main(String[] args) {
 
-        String test = "  a b  cc d   e   ";
+        String test = "I   Love  Yahoo  ";
         System.out.print(method(test));
 
     }
@@ -22,17 +22,30 @@ public class RemoveSpace {
             return input;
         }
 
-        char[] array = input.toCharArray();
         int slow = 0;
-        for(int fast=0; fast<array.length; fast++){
-            if(array[fast] == ' ' && (slow == 0 || array[fast - 1] == ' ')){
-                continue;
+        int fast = 0;
+        char[] array = input.toCharArray();
+        while(fast != array.length){
+
+            if(slow == 0){
+                if(array[fast] == ' '){
+                    fast++;
+                }else{
+                    array[slow++] = array[fast++];
+                }
+            }else{
+                if((array[fast] == ' '&& array[slow-1] != ' ' )|| array[fast] != ' '){
+                    array[slow++] = array[fast++];
+                }else{
+                    fast++;
+                }
             }
-            array[slow++] = array[fast];
         }
-        if(slow > 0 && array[slow - 1] == ' '){
+
+        if(slow > 0 && array[slow-1] == ' '){
             slow--;
         }
+
         return new String(array, 0, slow);
     }
 }
